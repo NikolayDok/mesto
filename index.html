@@ -21,10 +21,10 @@
       <img class="profile__avatar" src="./images/avatar.png" alt="Фотография профиля">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <span class="profile__job">Исследователь океана</span>
-        <button class="profile__btn" type="submit"></button>
+        <p class="profile__job">Исследователь океана</p>
+        <button class="profile__edit-btn" type="button"></button>
       </div>
-      <button class="profile__add-button"></button>
+      <button class="profile__add-button" type="button"></button>
     </section>
 
     <section class="cards">
@@ -33,42 +33,42 @@
           <img src="./images/karachayevsk.jpg" alt="Изображение Сентинского храма" class="cards__image">
           <div class="cards__info">
             <h2 class="cards__title">Карачаевск</h2>
-            <button class="cards__likes-btn cards__likes-btn_active"></button>
+            <button class="cards__likes-btn cards__likes-btn_active" type="button"></button>
           </div>
         </li>
         <li class="cards__item">
           <img src="./images/elbrus.jpg" alt="Гора эльбрус" class="cards__image">
           <div class="cards__info">
             <h2 class="cards__title">Гора Эльбрус</h2>
-            <button class="cards__likes-btn"></button>
+            <button class="cards__likes-btn" type="button"></button>
           </div>
         </li>
         <li class="cards__item">
           <img src="./images/dombay.jpg" alt="Изображение заснеженной горы" class="cards__image">
           <div class="cards__info">
             <h2 class="cards__title">Домбай</h2>
-            <button class="cards__likes-btn"></button>
+            <button class="cards__likes-btn" type="button"></button>
           </div>
         </li>
         <li class="cards__item">
           <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="cards__image">
           <div class="cards__info">
             <h2 class="cards__title">Гора Эльбрус</h2>
-            <button class="cards__likes-btn"></button>
+            <button class="cards__likes-btn" type="button"></button>
           </div>
         </li>
         <li class="cards__item">
           <img src="./images/dombay.jpg" alt="Изображение заснеженной горы" class="cards__image">
           <div class="cards__info">
             <h2 class="cards__title">Домбай</h2>
-            <button class="cards__likes-btn"></button>
+            <button class="cards__likes-btn" type="button"></button>
           </div>
         </li>
         <li class="cards__item">
           <img src="./images/karachayevsk.jpg" alt="Сентинский храм" class="cards__image">
           <div class="cards__info">
             <h2 class="cards__title">Карачаево-Черкесия</h2>
-            <button class="cards__likes-btn"></button>
+            <button class="cards__likes-btn" type="button"></button>
           </div>
         </li>
       </ul>
@@ -77,20 +77,20 @@
   </main>
 
   <footer class="footer">
-    <span class="footer__copyright">
+    <p class="footer__copyright">
       © 2020 Mesto Russia
-    </span>
+    </p>
   </footer>
 
   <div class="popup">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" action="#">
-        <input class="popup__name" type="text" name="name" value="Жак-Ив Кусто">
-        <input class="popup__job" type="text" name="job" value="Исследователь океана">
-        <button class="popup__btn">Сохранить</button>
+      <form class="popup__form" action="#" name="profile">
+        <input class="popup__input popup__input_profile_name" type="text" name="name" placeholder="Имя" value="">
+        <input class="popup__input popup__input_profile_job" type="text" name="job" placeholder="Профессия" value="">
+        <button class="popup__btn" type="submit">Сохранить</button>
       </form>
-      <button class="popup__close-btn"></button>
+      <button class="popup__close-btn" type="button"></button>
     </div>
   </div>
   <script src="./scripts/index.js"></script>
