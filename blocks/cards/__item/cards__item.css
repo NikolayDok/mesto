@@ -1,5 +1,7 @@
 .cards__item {
-  max-width: 282px;
+  position: relative;
+  width: 282px;
+  height: 361px;
   border-radius: 10px;
   background-color: #fff;
   display: flex;

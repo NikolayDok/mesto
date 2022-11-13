@@ -29,48 +29,7 @@
 
     <section class="cards">
       <ul class="cards__list">
-        <li class="cards__item">
-          <img src="./images/karachayevsk.jpg" alt="Изображение Сентинского храма" class="cards__image">
-          <div class="cards__info">
-            <h2 class="cards__title">Карачаевск</h2>
-            <button class="cards__likes-btn cards__likes-btn_active" type="button"></button>
-          </div>
-        </li>
-        <li class="cards__item">
-          <img src="./images/elbrus.jpg" alt="Гора эльбрус" class="cards__image">
-          <div class="cards__info">
-            <h2 class="cards__title">Гора Эльбрус</h2>
-            <button class="cards__likes-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="cards__item">
-          <img src="./images/dombay.jpg" alt="Изображение заснеженной горы" class="cards__image">
-          <div class="cards__info">
-            <h2 class="cards__title">Домбай</h2>
-            <button class="cards__likes-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="cards__item">
-          <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="cards__image">
-          <div class="cards__info">
-            <h2 class="cards__title">Гора Эльбрус</h2>
-            <button class="cards__likes-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="cards__item">
-          <img src="./images/dombay.jpg" alt="Изображение заснеженной горы" class="cards__image">
-          <div class="cards__info">
-            <h2 class="cards__title">Домбай</h2>
-            <button class="cards__likes-btn" type="button"></button>
-          </div>
-        </li>
-        <li class="cards__item">
-          <img src="./images/karachayevsk.jpg" alt="Сентинский храм" class="cards__image">
-          <div class="cards__info">
-            <h2 class="cards__title">Карачаево-Черкесия</h2>
-            <button class="cards__likes-btn" type="button"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
 
@@ -82,7 +41,7 @@
     </p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_profile_edit">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" action="#" name="profile">
@@ -93,6 +52,43 @@
       <button class="popup__close-btn" type="button"></button>
     </div>
   </div>
+
+
+  <div class="popup popup_place_create">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" action="#" name="place">
+        <input class="popup__input popup__input_place_name" type="text" name="place" placeholder="Название" value="">
+        <input class="popup__input popup__input_place_link" type="text" name="place_link"
+          placeholder="Ссылка на картинку" value="">
+        <button class="popup__btn" type="submit">Создать</button>
+      </form>
+      <button class="popup__close-btn" type="button"></button>
+    </div>
+  </div>
+
+
+  <div class="popup popup_place_image">
+    <figure class="popup__figure">
+      <img src="#" alt="" class="popup__image">
+      <figcaption class="popup__figcaption"></figcaption>
+      <button class="popup__close-btn" type="button"></button>
+    </figure>
+  </div>
+
+
+  <template id="card-template">
+    <li class="cards__item">
+      <img src="#" alt="" class="cards__image">
+      <div class="cards__info">
+        <h2 class="cards__title"></h2>
+        <button class="cards__likes-btn" type="button"></button>
+      </div>
+      <button class="cards__delete-btn" type="button"></button>
+    </li>
+  </template>
+
+  <script src="./scripts/cards__item.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 
