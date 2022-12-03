@@ -19,11 +19,13 @@ const popupPlaceImageCaption = document.querySelector('.popup__figcaption');
 //open popup
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  enableValidation(selectorsValidation);
 };
 
 //close popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  disabledBtnPopup(popup);
 };
 
 //close popup by click outside
@@ -56,6 +58,14 @@ popupCloseBtns.forEach(item => {
   item.addEventListener('click', () => {
     closePopup(popupCloseElement);
   })
+});
+
+//close ESC
+const escClose = document.addEventListener('keydown', function (event) {
+  const key = event.key; // const {key} = event; in ES6+
+  if (key === "Escape") {
+    closePopup(document.querySelector('.popup_opened'));
+  }
 });
 
 //close popup by click outside

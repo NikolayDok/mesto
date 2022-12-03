@@ -7,11 +7,11 @@
   color: #fff;
   background-color: #000;
   padding: 14px 0;
-  border: none;
+  border: 1px solid #000;
   border-radius: 2px;
   cursor: pointer;
   transition: opacity .3s ease;
-  margin: 29px 0 0;
+  margin: 20px 0 0;
 }
 
 .popup__btn:hover {
@@ -22,6 +22,6 @@
   .popup__btn {
     font-size: 14px;
     line-height: 17px;
-    margin: 27px 0 0;
+    margin: 18px 0 0;
   }
 }
