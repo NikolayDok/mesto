@@ -59,20 +59,23 @@ const toggleButtonState = (inputList, buttonElement) => {
   }
 };
 
-const disabledBtnPopup = (popupItem) => {
+const removeErrorValidity = (popupItem) => {
   popupItem.querySelectorAll('.popup__input').forEach(elem => {
     elem.classList.remove('popup__input_type_error');
   });
   popupItem.querySelectorAll('.popup__error').forEach(elem => {
     elem.textContent = '';
   });
+  const popupBtn = popupItem.querySelector('.popup__btn')
+  popupBtn.classList.add('popup__btn_disabled');
+  popupBtn.setAttribute('disabled', true);
 };
 
-const selectorsValidation = {
+enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__btn',
   inactiveButtonClass: 'popup__btn_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
-};
+});

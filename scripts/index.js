@@ -15,17 +15,23 @@ const cardContainer = document.querySelector('.cards__list');
 const popupPlaceImageLink = document.querySelector('.popup__image');
 const popupPlaceImageCaption = document.querySelector('.popup__figcaption');
 
-
 //open popup
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  enableValidation(selectorsValidation);
+  document.addEventListener('keydown', escClose);
 };
 
 //close popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  disabledBtnPopup(popup);
+  choosePopupRemoveError(popup);
+  document.removeEventListener('keydown', escClose);
+};
+
+const choosePopupRemoveError = (item) => {
+  if (!(item === popupPlaceImage)) {
+    removeErrorValidity(item);
+  }
 };
 
 //close popup by click outside
@@ -60,13 +66,12 @@ popupCloseBtns.forEach(item => {
   })
 });
 
-//close ESC
-const escClose = document.addEventListener('keydown', function (event) {
-  const key = event.key; // const {key} = event; in ES6+
+const escClose = (event) => {
+  const { key } = event;; // const {key} = event; in ES6+
   if (key === "Escape") {
     closePopup(document.querySelector('.popup_opened'));
   }
-});
+};
 
 //close popup by click outside
 initClosePopupByOverlay(popupProfile);
