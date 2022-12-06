@@ -24,14 +24,7 @@ function openPopup(popup) {
 //close popup
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  choosePopupRemoveError(popup);
   document.removeEventListener('keydown', escClose);
-};
-
-const choosePopupRemoveError = (item) => {
-  if (!(item === popupPlaceImage)) {
-    removeErrorValidity(item);
-  }
 };
 
 //close popup by click outside
@@ -80,6 +73,7 @@ initClosePopupByOverlay(popupPlaceImage);
 
 profileAddCardBtn.addEventListener('click', () => {
   openPopup(popupPlace);
+  removeErrorValidity(popupPlace);
 });
 
 //submit profile

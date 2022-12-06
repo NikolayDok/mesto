@@ -49,10 +49,14 @@ const hasInvalidInput = (inputList) => {
   })
 };
 
+const disabledPopupBtn = (disabledElem) => {
+  disabledElem.classList.add('popup__btn_disabled');
+  disabledElem.setAttribute('disabled', true);
+}
+
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__btn_disabled');
-    buttonElement.setAttribute('disabled', true);
+    disabledPopupBtn(buttonElement);
   } else {
     buttonElement.classList.remove('popup__btn_disabled');
     buttonElement.removeAttribute('disabled');
@@ -66,9 +70,8 @@ const removeErrorValidity = (popupItem) => {
   popupItem.querySelectorAll('.popup__error').forEach(elem => {
     elem.textContent = '';
   });
-  const popupBtn = popupItem.querySelector('.popup__btn')
-  popupBtn.classList.add('popup__btn_disabled');
-  popupBtn.setAttribute('disabled', true);
+  const popupBtn = popupItem.querySelector('.popup__btn');
+  disabledPopupBtn(popupBtn);
 };
 
 enableValidation({
