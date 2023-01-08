@@ -1,10 +1,10 @@
-import { openPopupImage } from './index.js';
+import { openPopupImage } from './utils/utils.js';
 
 export default class Card {
-  constructor({ name, link }) {
+  constructor({ name, link }, cardTemplate) {
     this._name = name;
     this._link = link;
-    this._template = document.querySelector('#card-template');
+    this._template = cardTemplate;
   }
 
   _getTemplate() {
