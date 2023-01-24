@@ -1,9 +1,8 @@
-import { openPopupImage } from './utils/utils.js';
-
 export default class Card {
-  constructor({ name, link }, cardTemplate) {
-    this._name = name;
-    this._link = link;
+  constructor({ dataCard, handleCardClick }, cardTemplate) {
+    this._name = dataCard.name;
+    this._link = dataCard.link;
+    this._handleCardClick = handleCardClick;
     this._template = cardTemplate;
   }
 
@@ -40,7 +39,7 @@ export default class Card {
     cardLike.addEventListener('click', () => { this._checkLike() });
 
     const cardLink = this._newCard.querySelector('.cards__image');
-    cardLink.addEventListener('click', () => { openPopupImage(cardLink) });
+    cardLink.addEventListener('click', () => { this._handleCardClick(cardLink) });
   }
 
   getView() {
