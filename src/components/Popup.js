@@ -1,19 +1,20 @@
 export default class Popup {
-  constructor(popupSelector) {
-    this._popupSelector = popupSelector;
-    this._popupCloseBtnSelector = this._popupSelector.querySelector('.popup__close-btn');
+  constructor({ popupSelector }) {
+    this._popupElement = document.querySelector(popupSelector);
+    this._popupCloseBtn = this._popupElement.querySelector('.popup__close-btn');
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   //open popup
   openPopup() {
-    this._popupSelector.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
+    this._popupElement.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   // close popup
   closePopup() {
-    this._popupSelector.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose.bind(this));
+    this._popupElement.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   //closing by esc
@@ -25,12 +26,12 @@ export default class Popup {
 
   // closes when clicking closeBtn
   setEventListeners() {
-    this._popupCloseBtnSelector.addEventListener('click', () => {
+    this._popupCloseBtn.addEventListener('click', () => {
       this.closePopup();
     });
 
     //closes when clicking on the darkened area around the form
-    this._popupSelector.addEventListener('click', (event) => {
+    this._popupElement.addEventListener('mousedown', (event) => {
       if (event.target === event.currentTarget) {
         this.closePopup();
       }

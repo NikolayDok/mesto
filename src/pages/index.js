@@ -8,15 +8,11 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
 
 import {
-  cardTemplate,
   cardContainer,
-  popupPlaceImage,
   profileAddCardBtn,
   profileBtn,
-  popupPlace,
-  popupProfile,
-  profileName,
-  profileJob,
+  popupFormProfile,
+  popupFormPlace,
   popupName,
   popupJob,
   initialCards,
@@ -24,7 +20,9 @@ import {
 } from '../utils/constants.js';
 
 // Create popup big image
-const popupWithImage = new PopupWithImage(popupPlaceImage);
+const popupWithImage = new PopupWithImage({
+  popupSelector: '.popup_place_image'
+});
 
 //create card
 const renderCard = (cardsItem) => {
@@ -33,8 +31,8 @@ const renderCard = (cardsItem) => {
     handleCardClick: () => {
       popupWithImage.openPopup(cardsItem);
     },
-  },
-    cardTemplate,
+    cardTemplateSelector: '#card-template',
+  }
   );
   return card.getView();
 };
@@ -50,12 +48,12 @@ const initialCardsList = new Section(
 
 initialCardsList.renderItems(initialCards);
 
-const validationPlaceForm = new FormValidator(validationConfig, '.popup__form-place');
+const validationPlaceForm = new FormValidator(validationConfig, popupFormPlace);
 validationPlaceForm.enableValidation();
 
 //create popup add card
 const popupAddCard = new PopupWithForm({
-  popupSelector: popupPlace,
+  popupSelector: '.popup_place_create',
   handleFormSubmit: (data) => {
     data['name'] = data['place'];
     data['link'] = data['place-link'];
@@ -74,18 +72,18 @@ profileAddCardBtn.addEventListener('click', () => {
 popupAddCard.setEventListeners();
 
 //validation profile
-const validationProfileForm = new FormValidator(validationConfig, '.popup__form-profile');
+const validationProfileForm = new FormValidator(validationConfig, popupFormProfile);
 validationProfileForm.enableValidation();
 
 // user info
 const userInfo = new UserInfo({
-  name: profileName,
-  infoAbout: profileJob,
+  nameSelector: '.profile__name',
+  infoAboutSelector: '.profile__job',
 });
 
 //submit profile
 const popupEdit = new PopupWithForm({
-  popupSelector: popupProfile,
+  popupSelector: '.popup_profile_edit',
   handleFormSubmit: (data) => {
     userInfo.setUserInfo(data);
     validationProfileForm.disabledPopupBtn();

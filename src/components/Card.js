@@ -1,25 +1,18 @@
 export default class Card {
-  constructor({ dataCard, handleCardClick }, cardTemplate) {
+  constructor({ dataCard, handleCardClick, cardTemplateSelector }) {
     this._name = dataCard.name;
     this._link = dataCard.link;
     this._handleCardClick = handleCardClick;
-    this._template = cardTemplate;
+    this._templateSelector = cardTemplateSelector;
   }
 
   _getTemplate() {
-    const card = this._template
+    const card = document.
+      querySelector(this._templateSelector)
       .content.querySelector('.cards__item')
       .cloneNode(true);
 
     return card;
-  }
-
-  _setData() {
-    const cardName = this._newCard.querySelector('.cards__title');
-    cardName.textContent = this._name;
-    const cardImage = this._newCard.querySelector('.cards__image');
-    cardImage.src = this._link;
-    cardImage.alt = this._name;
   }
 
   _deleteCard() {
@@ -44,8 +37,13 @@ export default class Card {
 
   getView() {
     this._newCard = this._getTemplate();
-    this._setData();
     this._setEventListener();
+
+    this._cardName = this._newCard.querySelector('.cards__title');
+    this._cardName.textContent = this._name;
+    this._cardImage = this._newCard.querySelector('.cards__image');
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
 
     return this._newCard;
   }
