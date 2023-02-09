@@ -6,32 +6,92 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
+import Api from '../components/Api';
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 
 import {
   cardContainer,
   profileAddCardBtn,
   profileBtn,
+  avatarBtn,
   popupFormProfile,
+  popupFormAvatar,
   popupFormPlace,
   popupName,
   popupJob,
-  initialCards,
   validationConfig,
 } from '../utils/constants.js';
 
-// Create popup big image
-const popupWithImage = new PopupWithImage({
-  popupSelector: '.popup_place_image'
-});
+let userId;
+
+//Api
+const configApi = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-58',
+  headers: {
+    authorization: '1ecbbea3-4e9e-4d1f-ac87-f48debc46fcc',
+    'Content-Type': 'application/json',
+  }
+};
+
+const api = new Api(configApi);
+
+//Get initial cards
+api.getInitialCards().then((data) => {
+  data.reverse();
+  initialCardsList.renderItems(data);
+})
+  .catch((err) => {
+    console.log(err);
+  });
+
+//Get user info
+api.getUserInfo().then((data) => {
+  userId = data._id;
+  userInfo.setUserInfo(data);
+})
+  .catch((err) => {
+    console.log(err);
+  });
 
 //create card
 const renderCard = (cardsItem) => {
   const card = new Card({
     dataCard: cardsItem,
+    userId: userId,
     handleCardClick: () => {
       popupWithImage.openPopup(cardsItem);
     },
     cardTemplateSelector: '#card-template',
+    handleDeleteCard: (id) => {
+      popupDeleteCard.openPopup(cardsItem);
+      popupDeleteCard.confirmationCartDelete(() => {
+        api.deleteCardApi(id)
+          .then(() => {
+            card.deleteCard();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+    },
+    handleLike: (id) => {
+      api.setLikeCard(id)
+        .then((data) => {
+          card.counterLikes(data.likes);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    handleDeleteLike: (id) => {
+      api.deleteLikeCard(id)
+        .then((data) => {
+          card.counterLikes(data.likes);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
   );
   return card.getView();
@@ -46,7 +106,17 @@ const initialCardsList = new Section(
   cardContainer
 );
 
-initialCardsList.renderItems(initialCards);
+// Create popup big image
+const popupWithImage = new PopupWithImage({
+  popupSelector: '.popup_place_image'
+});
+
+// Create popup delete card
+const popupDeleteCard = new PopupWithConfirmation({
+  popupSelector: '.popup_delete-card'
+});
+
+popupDeleteCard.setEventListeners();
 
 const validationPlaceForm = new FormValidator(validationConfig, popupFormPlace);
 validationPlaceForm.enableValidation();
@@ -59,8 +129,18 @@ const popupAddCard = new PopupWithForm({
     data['link'] = data['place-link'];
     delete data['place'];
     delete data['place-link'];
-    cardContainer.prepend(renderCard(data));
-    popupAddCard.closePopup();
+    popupAddCard.loadingSubmit(true);
+    api.createCard(data)
+      .then((data) => {
+        cardContainer.prepend(renderCard(data));
+        popupAddCard.closePopup();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        popupAddCard.loadingSubmit(false);
+      })
   },
 });
 
@@ -79,15 +159,26 @@ validationProfileForm.enableValidation();
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   infoAboutSelector: '.profile__job',
+  profileAvatarSelector: '.profile__avatar',
 });
 
 //submit profile
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_profile_edit',
   handleFormSubmit: (data) => {
-    userInfo.setUserInfo(data);
-    validationProfileForm.disabledPopupBtn();
-    popupEdit.closePopup();
+    popupEdit.loadingSubmit(true);
+    api.sendUserInfo(data)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        validationProfileForm.disabledPopupBtn();
+        popupEdit.closePopup();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        popupEdit.loadingSubmit(false);
+      });
   },
 });
 
@@ -96,7 +187,39 @@ profileBtn.addEventListener('click', () => {
   popupEdit.openPopup();
   const popupUserInfo = userInfo.getUserInfo();
   popupName.value = popupUserInfo.name;
-  popupJob.value = popupUserInfo.infoAbout;
+  popupJob.value = popupUserInfo.about;
 });
 
 popupEdit.setEventListeners();
+
+
+//validation avatar
+const validationAvatarForm = new FormValidator(validationConfig, popupFormAvatar);
+validationAvatarForm.enableValidation();
+
+//create popup avatar
+const popupEditAvatar = new PopupWithForm({
+  popupSelector: '.popup_avatar_edit',
+  handleFormSubmit: (data) => {
+    console.log(data);
+    popupEditAvatar.loadingSubmit(true);
+    api.sendAvatar(data)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        validationAvatarForm.disabledPopupBtn();
+        popupEditAvatar.closePopup();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        popupEditAvatar.loadingSubmit(false);
+      });
+  },
+});
+
+avatarBtn.addEventListener('click', () => {
+  popupEditAvatar.openPopup();
+});
+
+popupEditAvatar.setEventListeners();
