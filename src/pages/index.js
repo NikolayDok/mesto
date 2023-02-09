@@ -35,20 +35,18 @@ const configApi = {
 
 const api = new Api(configApi);
 
-//Get initial cards
-api.getInitialCards().then((data) => {
-  data.reverse();
-  initialCardsList.renderItems(data);
-})
-  .catch((err) => {
-    console.log(err);
-  });
+// Get initial cards and user info
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([dataUser, dataCard]) => {
 
-//Get user info
-api.getUserInfo().then((data) => {
-  userId = data._id;
-  userInfo.setUserInfo(data);
-})
+    userId = dataUser._id;
+    userInfo.setUserInfo(dataUser);
+    console.log(dataUser);
+
+    dataCard.reverse();
+    initialCardsList.renderItems(dataCard);
+
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -125,10 +123,6 @@ validationPlaceForm.enableValidation();
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_place_create',
   handleFormSubmit: (data) => {
-    data['name'] = data['place'];
-    data['link'] = data['place-link'];
-    delete data['place'];
-    delete data['place-link'];
     popupAddCard.loadingSubmit(true);
     api.createCard(data)
       .then((data) => {
